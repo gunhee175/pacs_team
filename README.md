@@ -39,7 +39,16 @@ streamlit run streamlit_app.py
 pytest tests/ -v --cov=app
 ```
 
-## Streamlit Community Cloud 배포
+## GitHub Pages 배포 (stlite 기반 정적 호스팅)
+
+Streamlit은 본래 Python 서버가 필요하지만, **stlite (WebAssembly / Pyodide)** 기술을 통해 브라우저에서 직접 실행되는 정적 웹사이트로 변환하여 GitHub Pages에 무료 호스팅할 수 있습니다.
+
+### 설정 방법 (최초 1회)
+1. GitHub 저장소의 **Settings** → **Pages** 이동
+2. **Build and deployment** > **Source** 항목을 `Deploy from a branch` 대신 **`GitHub Actions`** 로 선택
+3. 코드를 푸시하면 `.github/workflows/deploy-gh-pages.yml` 워크플로우가 자동으로 실행되어 배포 완료됩니다.
+
+## Streamlit Community Cloud 배포 (공식 대안)
 
 1. [share.streamlit.io](https://share.streamlit.io) → New app
 2. Repository 선택 → Branch: `main` → **Main file: `streamlit_app.py`**

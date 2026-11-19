@@ -17,6 +17,9 @@ ENV/
 .coverage
 htmlcov/
 
+# Build outputs
+dist/
+
 # IDE
 .vscode/
 .idea/
