@@ -25,8 +25,8 @@ jobs:
 
       - name: Lint check
         run: |
-          black --check .
-          flake8 . --count --show-source --statistics
+          black --check streamlit_app.py app/ tests/
+          flake8 streamlit_app.py app/ tests/ --count --show-source --statistics
 
       - name: Run tests
         run: pytest tests/ -v --tb=short

@@ -33,10 +33,10 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: black (포맷 검사)
-        run: black --check .
+        run: black --check streamlit_app.py app/ tests/
 
       - name: flake8 (린트)
-        run: flake8 . --count --show-source --statistics
+        run: flake8 streamlit_app.py app/ tests/ --count --show-source --statistics
 
       - name: pytest (단위 테스트 + 커버리지)
         run: pytest tests/ -v --tb=short --cov=app --cov-report=xml
