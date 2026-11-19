@@ -45,3 +45,4 @@ jobs:
         run: |
           echo "✅ Tests passed. Streamlit Community Cloud will auto-redeploy from main branch."
           echo "🔗 App URL: https://share.streamlit.io/<your-username>/<repo>/<branch>/<entrypoint>"
+

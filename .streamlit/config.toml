@@ -1,14 +1,12 @@
 [theme]
-primaryColor       = "#1f77b4"
-backgroundColor    = "#ffffff"
-secondaryBackgroundColor = "#f0f2f6"
-textColor          = "#262730"
-font               = "sans serif"
+primaryColor = "#0D6EFD"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8F9FA"
+textColor = "#212529"
+font = "sans serif"
 
 [server]
-headless           = true       # 배포 환경에서 브라우저 자동 열기 방지
-port               = 8501
-enableCORS         = false
-
-[browser]
-gatherUsageStats   = false      # 텔레메트리 비활성화
+headless = true
+port = 8501
+enableCORS = false
+enableXsrfProtection = true

@@ -1,34 +1,33 @@
-"""
-앱 진입점 (엔트리포인트)
-실행: streamlit run streamlit_app.py
-"""
+"""PACS Team - Streamlit 메인 진입점"""
 
-# st.set_page_config 은 반드시 첫 번째 Streamlit 호출이어야 하므로
-# 내부 모듈 import 보다 먼저 실행합니다. (flake8 E402 noqa 처리)
 import streamlit as st
-from app.components.sidebar import render_sidebar  # noqa: E402
-from app.pages.dashboard import render_dashboard  # noqa: E402
-from app.pages.home import render_home  # noqa: E402
-
-st.set_page_config(
-    page_title="PACS Team App",
-    page_icon="🩻",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+from app.utils.helpers import init_session_state
+from app.components.sidebar import render_sidebar
+from app.pages.home import render_home_page
+from app.pages.dashboard import render_dashboard_page
 
 
 def main():
-    render_sidebar()
+    st.set_page_config(
+        page_title="PACS Team - 의료영상 모니터링",
+        page_icon="🏥",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
 
-    page = st.session_state.get("page", "홈")
+    # 1. 세션 상태 초기화
+    init_session_state()
 
-    if page == "홈":
-        render_home()
-    elif page == "대시보드":
-        render_dashboard()
+    # 2. 사이드바 네비게이션 렌더링
+    selected_page = render_sidebar()
+    st.session_state.current_page = selected_page
+
+    # 3. 페이지 라우팅
+    if selected_page == "홈":
+        render_home_page()
+    elif selected_page == "대시보드":
+        render_dashboard_page()
 
 
 if __name__ == "__main__":
     main()
-

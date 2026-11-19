@@ -10,3 +10,4 @@ extend-exclude = '''
   | \.github
 )/
 '''
+
