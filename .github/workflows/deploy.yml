@@ -1,0 +1,47 @@
+name: CD — Deploy to Streamlit Community Cloud
+
+on:
+  push:
+    branches: [main]          # main 머지(PR 완료) 시 자동 배포
+  workflow_dispatch:          # 수동 트리거 가능
+
+jobs:
+  # ── 1. CI 먼저 통과해야 배포 진행 ─────────────────────
+  test:
+    name: Pre-deploy Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Lint check
+        run: |
+          black --check .
+          flake8 . --count --show-source --statistics
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+
+  # ── 2. Streamlit Community Cloud 배포 ─────────────────
+  # Streamlit Community Cloud는 GitHub 저장소를 직접 감지하여
+  # main 브랜치 push 시 자동으로 재배포합니다.
+  # 아래 job은 배포 상태를 Slack/Discord 등에 알리는 용도입니다.
+  notify:
+    name: Notify Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Deployment success notification
+        run: |
+          echo "✅ Tests passed. Streamlit Community Cloud will auto-redeploy from main branch."
+          echo "🔗 App URL: https://share.streamlit.io/<your-username>/<repo>/<branch>/<entrypoint>"
